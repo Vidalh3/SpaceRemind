@@ -1,0 +1,25 @@
+rules_version = '2';
+
+// SpaceRemind Firestore rules — multi-user. Every document is owned by the
+// user who created it; reads and writes are restricted to that owner.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function owns(resource) {
+      return resource.data.ownerId == request.auth.uid;
+    }
+    function creatingAsSelf() {
+      return request.resource.data.ownerId == request.auth.uid;
+    }
+
+    match /{collection}/{docId} {
+      allow read: if signedIn() && owns(resource);
+      allow create: if signedIn() && creatingAsSelf();
+      // Don't allow ownerId to be reassigned on update.
+      allow update: if signedIn() && owns(resource) && creatingAsSelf();
+      allow delete: if signedIn() && owns(resource);
+    }
+  }
+}

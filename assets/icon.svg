@@ -1,0 +1,18 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- location pin -->
+  <path d="M256 104c-66 0-120 52-120 117 0 86 104 178 116 188a6 6 0 0 0 8 0c12-10 116-102 116-188 0-65-54-117-120-117z"
+        fill="#ffffff"/>
+  <!-- box inside pin -->
+  <g fill="none" stroke="#4f46e5" stroke-width="16" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M256 168l60 34v60l-60 34-60-34v-60z"/>
+    <path d="M196 202l60 34 60-34"/>
+    <path d="M256 236v60"/>
+  </g>
+</svg>

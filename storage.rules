@@ -1,0 +1,16 @@
+rules_version = '2';
+
+// SpaceRemind Storage rules. Item photos live under places/<placeId>/<file>.
+// Storage rules can't query Firestore for ownership, so we require an
+// authenticated user and constrain uploads to reasonably-sized images.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /places/{placeId}/{fileName} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null
+        && request.resource.size < 10 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+      allow delete: if request.auth != null;
+    }
+  }
+}

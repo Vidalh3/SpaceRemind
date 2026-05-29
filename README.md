@@ -33,6 +33,33 @@ In the [Firebase console](https://console.firebase.google.com/): create a projec
 enable **Google** sign-in (Authentication), create a **Firestore** database, and
 enable **Storage**. Copy the web app config values into `.env`.
 
+### Deploy Firestore rules & indexes
+
+The security rules and composite indexes live in version control. Deploy them
+with the Firebase CLI (`npm i -g firebase-tools`, then `firebase login`):
+
+```bash
+firebase deploy --only firestore:rules,firestore:indexes,storage
+```
+
+- `firestore.rules` — per-user `ownerId` access control
+- `firestore.indexes.json` — composite indexes for the app's queries
+- `storage.rules` — authenticated, image-only photo uploads
+
+## PWA
+
+SpaceRemind is an installable, offline-capable PWA (via `vite-plugin-pwa`):
+
+- App shell is precached; a service worker auto-updates on new deploys.
+- Firebase Storage photos are runtime-cached (cache-first).
+- Firestore uses IndexedDB persistence, so previously-loaded data works offline.
+
+Icons are generated from `assets/icon.svg`:
+
+```bash
+npm run icons   # writes public/icons/*.png
+```
+
 ## Project structure
 
 ```

@@ -6,8 +6,10 @@
 //
 // Scanning: uses html5-qrcode to read a code with the device camera and
 // extract the placeId so we can open that Place's inventory.
-import { Html5Qrcode } from "html5-qrcode";
-import QRCode from "qrcode";
+//
+// The `qrcode` and `html5-qrcode` libraries are heavy and only needed on the
+// QR/Scan paths, so they're loaded on demand via dynamic import() — keeping
+// them out of the initial bundle.
 
 // Build the retrieval URL that gets encoded into the QR / written to NFC.
 export function buildPlaceUrl(placeId, origin = window.location.origin) {
@@ -15,7 +17,8 @@ export function buildPlaceUrl(placeId, origin = window.location.origin) {
 }
 
 // Render a Place's deep link as a PNG data URL for display/printing.
-export function generateQrDataUrl(placeId) {
+export async function generateQrDataUrl(placeId) {
+  const { default: QRCode } = await import("qrcode");
   return QRCode.toDataURL(buildPlaceUrl(placeId), {
     width: 320,
     margin: 2,
@@ -36,6 +39,7 @@ export function parsePlaceId(scannedText) {
 // Start the camera scanner inside `elementId`. Calls onScan(placeId) on the
 // first successful decode and resolves with a stop() function.
 export async function startScanner(elementId, onScan) {
+  const { Html5Qrcode } = await import("html5-qrcode");
   const scanner = new Html5Qrcode(elementId);
   const config = { fps: 10, qrbox: { width: 250, height: 250 } };
   await scanner.start(

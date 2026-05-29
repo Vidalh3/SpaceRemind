@@ -2,6 +2,19 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        // Keep the Firebase SDK in its own chunk so app-code changes don't
+        // bust its cache between deploys.
+        manualChunks(id) {
+          if (id.includes("node_modules/firebase") || id.includes("node_modules/@firebase")) {
+            return "firebase";
+          }
+        },
+      },
+    },
+  },
   plugins: [
     VitePWA({
       registerType: "autoUpdate",

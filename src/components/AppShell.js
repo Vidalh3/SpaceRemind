@@ -4,19 +4,16 @@
 import { el } from "./ui.js";
 import { renderHeader } from "./Header.js";
 import { route, startRouter } from "../router.js";
-import { renderHome } from "../views/Home.js";
-import { renderPlace } from "../views/Place.js";
-import { renderScan } from "../views/Scan.js";
-import { renderReminders } from "../views/Reminders.js";
 
 let routesRegistered = false;
 
+// Each view is a separate chunk, dynamically imported when first navigated to.
 function registerRoutes() {
   if (routesRegistered) return;
-  route("/", () => renderHome());
-  route("/place/:id", (params) => renderPlace(params.id));
-  route("/scan", () => renderScan());
-  route("/reminders", () => renderReminders());
+  route("/", async () => (await import("../views/Home.js")).renderHome());
+  route("/place/:id", async (params) => (await import("../views/Place.js")).renderPlace(params.id));
+  route("/scan", async () => (await import("../views/Scan.js")).renderScan());
+  route("/reminders", async () => (await import("../views/Reminders.js")).renderReminders());
   routesRegistered = true;
 }
 

@@ -2,6 +2,7 @@
 // Reads config from Vite env vars (see .env.example). Initialize once and
 // export the shared Firestore + Storage handles for the rest of the app.
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
@@ -15,5 +16,12 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+
+// Current user's UID, used as ownerId on every document. Returns null when
+// signed out — callers should guard against that before writing.
+export function currentUid() {
+  return auth.currentUser?.uid ?? null;
+}

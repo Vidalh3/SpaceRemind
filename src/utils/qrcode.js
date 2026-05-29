@@ -7,10 +7,20 @@
 // Scanning: uses html5-qrcode to read a code with the device camera and
 // extract the placeId so we can open that Place's inventory.
 import { Html5Qrcode } from "html5-qrcode";
+import QRCode from "qrcode";
 
 // Build the retrieval URL that gets encoded into the QR / written to NFC.
 export function buildPlaceUrl(placeId, origin = window.location.origin) {
   return `${origin}/?place=${encodeURIComponent(placeId)}`;
+}
+
+// Render a Place's deep link as a PNG data URL for display/printing.
+export function generateQrDataUrl(placeId) {
+  return QRCode.toDataURL(buildPlaceUrl(placeId), {
+    width: 320,
+    margin: 2,
+    color: { dark: "#0f172a", light: "#ffffff" },
+  });
 }
 
 // Pull a placeId back out of a scanned URL (or accept a raw id).

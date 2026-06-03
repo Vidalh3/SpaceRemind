@@ -49,9 +49,12 @@ async function placesList(locationId) {
           "a",
           {
             href: `#/place/${doc.id}`,
-            class: "flex items-center justify-between rounded-lg px-3 py-2 text-sm text-slate-200 hover:bg-slate-800",
+            class: "flex items-center justify-between rounded-lg px-3 py-2 text-sm text-slate-200 transition-colors hover:bg-slate-800",
           },
-          [place.name, el("span", { class: "text-slate-500" }, "›")]
+          [
+            place.name,
+            el("svg", { class: "h-4 w-4 text-slate-600", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2", "stroke-linecap": "round", "stroke-linejoin": "round", html: '<path d="m9 18 6-6-6-6"/>' }),
+          ]
         )
       );
     });
@@ -72,12 +75,23 @@ function locationCard(doc) {
   const location = doc.data();
   const body = el("div", { class: "hidden" });
   let loaded = false;
+  const chevron = el("svg", {
+    class: "h-4 w-4 flex-shrink-0 text-slate-500 transition-transform duration-200",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    "stroke-width": "2",
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    html: '<path d="m6 9 6 6 6-6"/>',
+  });
   const header = el(
     "button",
     {
       class: "flex w-full items-center justify-between px-4 py-3 text-left",
       onClick: async () => {
         const isHidden = body.classList.toggle("hidden");
+        chevron.style.transform = isHidden ? "" : "rotate(180deg)";
         if (!isHidden && !loaded) {
           loaded = true;
           body.replaceChildren(await placesList(doc.id));
@@ -86,7 +100,7 @@ function locationCard(doc) {
     },
     [
       el("span", { class: "font-semibold" }, location.name),
-      el("span", { class: "text-slate-500" }, "⌄"),
+      chevron,
     ]
   );
   return el("div", { class: "overflow-hidden rounded-xl border border-slate-800 bg-slate-900" }, [

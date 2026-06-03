@@ -9,9 +9,16 @@ function navLink(href, label, iconPath) {
     "a",
     {
       href,
-      class: `flex flex-1 flex-col items-center gap-0.5 py-2 text-xs ${active ? "text-brand" : "text-slate-400"}`,
+      class: `relative flex flex-1 flex-col items-center gap-0.5 py-2 text-xs transition-colors ${
+        active ? "text-brand" : "text-slate-400 hover:text-slate-300"
+      }`,
     },
     [
+      active
+        ? el("span", {
+            class: "absolute left-1/2 top-0 h-0.5 w-6 -translate-x-1/2 rounded-full bg-brand",
+          })
+        : null,
       el("svg", {
         class: "h-6 w-6",
         viewBox: "0 0 24 24",

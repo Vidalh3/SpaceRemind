@@ -27,7 +27,7 @@ function reminderRow(doc, onChanged) {
       el(
         "button",
         {
-          class: "rounded-md px-2 py-1 text-xs text-emerald-400 hover:bg-slate-800",
+          class: "rounded-md p-1.5 text-emerald-400 transition-colors hover:bg-slate-800 hover:text-emerald-300",
           title: "Mark done",
           onClick: async () => {
             await updateReminder(doc.id, { done: true });
@@ -35,19 +35,19 @@ function reminderRow(doc, onChanged) {
             onChanged();
           },
         },
-        "✓"
+        [el("svg", { class: "h-4 w-4", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.5", "stroke-linecap": "round", "stroke-linejoin": "round", html: '<path d="M20 6 9 17l-5-5"/>' })]
       ),
       el(
         "button",
         {
-          class: "rounded-md px-2 py-1 text-xs text-rose-400 hover:bg-slate-800",
+          class: "rounded-md p-1.5 text-rose-400 transition-colors hover:bg-slate-800",
           title: "Delete",
           onClick: async () => {
             await deleteReminder(doc.id);
             onChanged();
           },
         },
-        "🗑"
+        [el("svg", { class: "h-4 w-4", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "1.8", "stroke-linecap": "round", "stroke-linejoin": "round", html: '<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/>' })]
       ),
     ]),
   ]);

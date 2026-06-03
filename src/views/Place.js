@@ -89,16 +89,16 @@ function itemRow(doc, onChanged) {
         el(
           "button",
           {
-            class: "rounded-md px-2 py-1 text-xs text-slate-400 hover:bg-slate-800",
+            class: "rounded-md p-1.5 text-slate-400 transition-colors hover:bg-slate-800 hover:text-slate-200",
             title: "Add reminder",
             onClick: () => openReminderDialog("item", doc.id, item.name),
           },
-          "⏰"
+          [el("svg", { class: "h-4 w-4", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "1.8", "stroke-linecap": "round", "stroke-linejoin": "round", html: '<path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>' })]
         ),
         el(
           "button",
           {
-            class: "rounded-md px-2 py-1 text-xs text-rose-400 hover:bg-slate-800",
+            class: "rounded-md p-1.5 text-rose-400 transition-colors hover:bg-slate-800",
             title: "Delete item",
             onClick: async () => {
               if (await confirmDialog(`Delete "${item.name}" and its photos?`)) {
@@ -108,7 +108,7 @@ function itemRow(doc, onChanged) {
               }
             },
           },
-          "🗑"
+          [el("svg", { class: "h-4 w-4", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "1.8", "stroke-linecap": "round", "stroke-linejoin": "round", html: '<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/>' })]
         ),
       ]),
     ]),
@@ -252,7 +252,10 @@ export async function renderPlace(placeId) {
   return el("section", { class: "flex flex-col gap-5 px-4 py-4" }, [
     el("div", { class: "flex items-start justify-between gap-2" }, [
       el("div", {}, [
-        el("a", { href: "#/", class: "text-xs text-slate-500" }, "‹ All places"),
+        el("a", { href: "#/", class: "flex items-center gap-1 text-xs text-slate-500 transition-colors hover:text-slate-300" }, [
+          el("svg", { class: "h-3.5 w-3.5", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.5", "stroke-linecap": "round", "stroke-linejoin": "round", html: '<path d="m15 18-6-6 6-6"/>' }),
+          "All places",
+        ]),
         el("h2", { class: "text-xl font-bold" }, place.name),
       ]),
       el(

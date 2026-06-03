@@ -114,8 +114,20 @@ export function spinner(label = "Loading…") {
 export function emptyState(message) {
   return el(
     "div",
-    { class: "flex flex-col items-center gap-2 py-16 text-center text-slate-500" },
-    [el("p", { class: "text-sm" }, message)]
+    { class: "flex flex-col items-center gap-3 py-16 text-center text-slate-500" },
+    [
+      el("svg", {
+        class: "h-10 w-10 text-slate-700",
+        viewBox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        "stroke-width": "1.5",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        html: '<path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>',
+      }),
+      el("p", { class: "text-sm" }, message),
+    ]
   );
 }
 
@@ -124,7 +136,7 @@ export function primaryButton(label, onClick, extra = "") {
   return el(
     "button",
     {
-      class: `rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-dark ${extra}`,
+      class: `rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-dark ${extra}`,
       onClick,
     },
     label

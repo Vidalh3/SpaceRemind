@@ -24,17 +24,24 @@ export function isFirebaseConfigured() {
   return Boolean(firebaseConfig.apiKey && firebaseConfig.projectId);
 }
 
-export const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-// Firestore with offline persistence (IndexedDB), shared across browser tabs,
-// so cached data stays available without a connection.
-export const db = initializeFirestore(app, {
-  localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
-});
-export const storage = getStorage(app);
+// When credentials aren't set up, provide stub exports so the module
+// loads cleanly — main.js will show the "configure Firebase" screen before
+// any stub is ever actually called.
+export let app, auth, db, storage;
+
+if (isFirebaseConfigured()) {
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  // Firestore with offline persistence (IndexedDB), shared across browser tabs,
+  // so cached data stays available without a connection.
+  db = initializeFirestore(app, {
+    localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
+  });
+  storage = getStorage(app);
+}
 
 // Current user's UID, used as ownerId on every document. Returns null when
 // signed out — callers should guard against that before writing.
 export function currentUid() {
-  return auth.currentUser?.uid ?? null;
+  return auth?.currentUser?.uid ?? null;
 }

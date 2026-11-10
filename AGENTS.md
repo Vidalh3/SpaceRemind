@@ -19,3 +19,5 @@ No test script is defined in `package.json`.
 ## Project rules
 - `.env` holds Firebase keys and is git-ignored. Don't read it into chat.
 - Security rules and indexes are version-controlled: change them in the repo, then deploy.
+
+Brain page: C:/Brain/wiki/projects/spaceremind.md (Vidal's second brain; read C:/Brain/AGENTS.md for company rules).

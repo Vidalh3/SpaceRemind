@@ -14,6 +14,7 @@ function registerRoutes() {
   route("/place/:id", async (params) => (await import("../views/Place.js")).renderPlace(params.id));
   route("/scan", async () => (await import("../views/Scan.js")).renderScan());
   route("/reminders", async () => (await import("../views/Reminders.js")).renderReminders());
+  route("/settings", async () => (await import("../views/Settings.js")).renderSettings());
   routesRegistered = true;
 }
 

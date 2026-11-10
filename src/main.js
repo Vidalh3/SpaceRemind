@@ -1,9 +1,29 @@
+// Unregister service worker on native platforms to avoid stale asset caching conflicts
+if (window.Capacitor || navigator.userAgent.includes("Capacitor")) {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (const registration of registrations) {
+        registration.unregister().then((success) => {
+          if (success) {
+            console.log("Unregistered service worker to load fresh local assets.");
+            window.location.reload();
+          }
+        });
+      }
+    });
+  }
+}
+
 import "./style.css";
 import { onAuth } from "./api/auth.js";
 import { isFirebaseConfigured } from "./api/firebase.js";
 import { renderSignIn } from "./components/SignIn.js";
 import { renderAppShell } from "./components/AppShell.js";
 import { el, spinner } from "./components/ui.js";
+import { initSettings } from "./utils/settings.js";
+
+// Initialize UI configurations (Theme, Spacing Density, Artwork Style)
+initSettings();
 
 const root = document.querySelector("#app");
 root.replaceChildren(spinner("Starting…"));

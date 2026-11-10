@@ -24,14 +24,14 @@ export function isFirebaseConfigured() {
   return Boolean(firebaseConfig.apiKey && firebaseConfig.projectId);
 }
 
-export const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+export const app = isFirebaseConfigured() ? initializeApp(firebaseConfig) : null;
+export const auth = app ? getAuth(app) : null;
 // Firestore with offline persistence (IndexedDB), shared across browser tabs,
 // so cached data stays available without a connection.
-export const db = initializeFirestore(app, {
+export const db = app ? initializeFirestore(app, {
   localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
-});
-export const storage = getStorage(app);
+}) : null;
+export const storage = app ? getStorage(app) : null;
 
 // Current user's UID, used as ownerId on every document. Returns null when
 // signed out — callers should guard against that before writing.

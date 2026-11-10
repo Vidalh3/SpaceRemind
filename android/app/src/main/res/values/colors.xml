@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand palette derived from SpaceRemind styles (Indigo/Blue/Slate) -->
+    <color name="colorPrimary">#6366f1</color>
+    <color name="colorPrimaryDark">#4f46e5</color>
+    <color name="colorAccent">#3b82f6</color>
+    <color name="brand_background">#020617</color>
+    <color name="brand_background_light">#f8fafc</color>
+    <color name="brand_surface">#0f172a</color>
+</resources>

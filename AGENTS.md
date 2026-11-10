@@ -1,7 +1,5 @@
 # SpaceRemind
 
-Also follow ~/ai-brain/AGENTS.md.
-
 ## Purpose
 Mobile-first app for tracking where things are stored: locations, places, items with photos, QR and NFC tags, and reminders.
 
